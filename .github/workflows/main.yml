@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -32,7 +33,6 @@ jobs:
           echo "CSV_URL=$CSV_URL"
           echo "TEST_CSV_URL=$TEST_CSV_URL"
           echo "Random_State=$Random_State"
-
       # Install mlflow
       - name: Install dependencies
         run: |
@@ -43,13 +43,11 @@ jobs:
       - name: Run mlflow project
         run: |
           mlflow run MLproject --env-manager=local 
-
       - name: Set up Git LFS
         run: |
           git config --global user.name ${{ secrets.username }}
           git config --global user.email ${{ secrets.email }}
           git lfs install
-
       # Save models to GitHub Repository
       - name: Save mlruns to repo
         run: |
@@ -58,7 +56,6 @@ jobs:
           git add mlruns/
           git commit -m "Save mlruns from CI run"
           git push origin main
-
       - name: Upload mlruns artifact
         uses: actions/upload-artifact@v4
         with:
